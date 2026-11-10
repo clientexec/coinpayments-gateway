@@ -10,6 +10,11 @@ class PluginCoinpaymentsCallback extends PluginCallback
 
     function processCallback()
     {
+        // Execute PluginCallback::processCallback() first
+        if (!parent::processCallback()) {
+            return;
+        }
+
         $merchantId = $this->settings->get('plugin_coinpayments_Merchant ID');
         $ipnSecret = $this->settings->get('plugin_coinpayments_IPN Secert');
         if (!isset($_POST['ipn_mode']) || $_POST['ipn_mode'] != 'hmac') {
